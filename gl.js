@@ -123,10 +123,62 @@ gl.twitter.form = {
 
         if (cfg.searchQuery) attrs.styleClass += ' search-query'
 
-        return gl.dom.factory({
+        var node = gl.dom.factory({
             tag: 'input',
             attrs: attrs
         })
+
+        if (!gl.undef(cfg.addOn)) {
+            var factoryElement = function(cfg) {
+                if (cfg.xType == 'button') {
+                    return gl.twitter.form.Button(cfg)
+                } else if (cfg.xType == 'dropdown') {
+
+                }
+            }
+
+            var wrapper = gl.dom.factory({
+                tag: 'div'
+            })
+
+            if (!gl.undef(cfg.addOn.left)) {
+                wrapper.className += ' input-prepend'
+
+                if (typeof cfg.addOn.left == 'object') {
+                    for (var i in cfg.addOn.left) {
+                        wrapper.appendChild(factoryElement(cfg.addOn.left[i]))
+                    }
+                } else {
+                    wrapper.appendChild(gl.dom.factory({
+                        tag: 'span',
+                        html: cfg.addOn.left,
+                        attrs: {'class': 'add-on'}
+                    }))
+                }
+            }
+
+            wrapper.appendChild(node);
+
+            if (!gl.undef(cfg.addOn.right)) {
+                wrapper.className += ' input-append'
+
+                if (typeof cfg.addOn.left == 'object') {
+                    for (var i in cfg.addOn.left) {
+                        wrapper.appendChild(factoryElement(cfg.addOn.left[i]))
+                    }
+                } else {
+                    wrapper.appendChild(gl.dom.factory({
+                        tag: 'span',
+                        html: cfg.addOn.right,
+                        attrs: {'class': 'add-on'}
+                    }))
+                }
+            }
+
+            node = wrapper;
+        }
+
+        return node;
     },
 
     TextArea: function(cfg) {
@@ -147,20 +199,20 @@ gl.twitter.form = {
             value: !gl.undef(cfg.value) ? cfg.value : ''
         })
 
-        return gl.dom.factory({
+        var node = gl.dom.factory({
             tag: 'input',
             attrs: attrs
         });
-    },
 
-    LabeledCheckBox: function(cfg) {
-        return gl.dom.factory({
-            tag: 'label',
-            attrs: {
-                styleClass: 'checkbox'
-            },
-            children: [cfg.label, gl.twitter.form.CheckBox(cfg)]
-        })
+        if (!gl.undef(cfg.label)) {
+            node = gl.dom.factory({
+                tag: 'label',
+                attrs: {'class': 'checkbox'},
+                children: [node, cfg.label]
+            })
+        }
+
+        return node;
     },
 
     Radio: function(cfg) {
@@ -171,20 +223,20 @@ gl.twitter.form = {
             value: !gl.undef(cfg.value) ? cfg.value : ''
         })
 
-        return gl.dom.factory({
+        var node = gl.dom.factory({
             tag: 'input',
             attrs: attrs
         });
-    },
 
-    LabeledRadio: function(cfg) {
-        return gl.dom.factory({
-            tag: 'label',
-            attrs: {
-                styleClass: 'radio'
-            },
-            children: [cfg.label, gl.twitter.form.Radio(cfg)]
-        })
+        if (!gl.undef(cfg.label)) {
+            node = gl.dom.factory({
+                tag: 'label',
+                attrs: {'class': 'radio'},
+                children: [node, cfg.label]
+            })
+        }
+
+        return node;
     },
 
     Button: function(cfg) {

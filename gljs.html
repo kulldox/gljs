@@ -63,7 +63,57 @@
                 attrs: {
                     placeholder: 'Search for the book'
                 }
-            }));
+            }))
+            $('#forms').append(gl.twitter.form.Text({
+                password: true,
+                attrs: {
+                    placeholder: 'Search for the book'
+                },
+                addOn: {
+                    left: '$'
+                }
+            }))
+            $('#forms').append(gl.twitter.form.Text({
+                password: true,
+                attrs: {
+                    placeholder: 'Search for the book'
+                },
+                addOn: {
+                    right: '.00'
+                }
+            }))
+            $('#forms').append(gl.twitter.form.Text({
+                password: true,
+                attrs: {
+                    placeholder: 'Search for the book'
+                },
+                addOn: {
+                    left: '$',
+                    right: '.00'
+                }
+            }))
+            $('#forms').append(gl.twitter.form.Text({
+                password: true,
+                attrs: {
+                    placeholder: 'Search for the book'
+                },
+                addOn: {
+                    left: [{
+                        xType: 'button',
+                        text: 'Button left #1'
+                    },{
+                        xType: 'button',
+                        text: 'Button left #2'
+                    }],
+                    right: [{
+                        xType: 'button',
+                        text: 'Button right #1'
+                    },{
+                        xType: 'button',
+                        text: 'Button right #2'
+                    }]
+                }
+            }))
 
 //            // Forms TextArea
             $('#forms').append(gl.twitter.Clearfix());
@@ -88,18 +138,9 @@
                     checked: true
                 }
             }))
-
-            // Forms LabeledCheckBox
-            $('#forms').append(gl.twitter.Clearfix());
-            $('#forms').append(gl.twitter.form.LabeledCheckBox({
-                label: 'My checkbox #1'
-            }));
-            $('#forms').append(gl.twitter.form.LabeledCheckBox({
-                label: 'My checkbox #2',
-                attrs:{
-                    checked: true
-                }
-            }));
+            $('#forms').append(gl.twitter.form.CheckBox({
+                label: 'My checkbox'
+            }))
 
             // Forms Radio
             $('#forms').append(gl.twitter.Clearfix());
@@ -110,22 +151,8 @@
                     name: 'myRadio'
                 }
             }));
-
-            // Forms LabeledRadio
-            $('#forms').append(gl.twitter.Clearfix());
-            $('#forms').append(gl.twitter.form.LabeledRadio({
-                label: 'My radio #1',
-                attrs: {
-                    name: 'myRadio'
-                }
-            }));
-            $('#forms').append(gl.twitter.form.LabeledRadio({
-                label: 'My radio #2',
-                attrs: {
-                    checked: true,
-                    name: 'myRadio'
-                }
-
+            $('#forms').append(gl.twitter.form.Radio({
+                label: 'My radio'
             }));
 
             // Form Button
@@ -159,16 +186,6 @@
                     1: 'One',
                     2: ['2.1', '2.2'],
                     3: {1:'3.1',2:'3.2'}
-                }
-            }))
-
-            $('#forms').append(gl.twitter.form.Text({
-                password: true,
-                attrs: {
-                    placeholder: 'Search for the book'
-                },
-                addOn: {
-                    left:
                 }
             }))
         });
