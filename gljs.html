@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+
+    <script src="jquery-1.9.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bee.core.js"></script>
+    <script src="bee.dom.js"></script>
+    <script src="bee.twitter.js"></script>
+    <script src="gl.js"></script>
+    <script>
+//        var MyService = bee.extend(bee.Service);
+//
+//        var myService = new MyService();
+//        myService.addObserver(function(state, params, response) {
+//            console.log(state, params, response);
+//        });
+//
+//        myService.get('ajax.json');
+//
+//        var MyComponent = bee.extend(bee.Component, {
+//            sayHello: function($scope) {
+//                $scope.age = 50;
+//            },
+//
+//            sayWorld: function($scope) {
+//                $scope.age = 30;
+//            }
+//        });
+
+        $(document).ready(function() {
+
+            // Forms Label
+            $('#forms').append(gl.twitter.form.Label({
+                text: 'Label 1'
+            }));
+
+            // Forms Help Block
+            $('#forms').append(gl.twitter.form.HelpBlock({
+                text: 'Help block message'
+            }));
+
+            // Forms Text
+            $('#forms').append(gl.twitter.Clearfix());
+            $('#forms').append(gl.twitter.form.Text());
+            $('#forms').append(gl.twitter.form.Text({
+                value: 'My text input'
+            }));
+            $('#forms').append(gl.twitter.form.Text({
+                attrs: {
+                    placeholder: 'My text placeholder'
+                }
+            }));
+            $('#forms').append(gl.twitter.form.Text({
+                searchQuery: true,
+                attrs: {
+                    placeholder: 'Search for the book'
+                }
+            }));
+            $('#forms').append(gl.twitter.form.Text({
+                password: true,
+                attrs: {
+                    placeholder: 'Search for the book'
+                }
+            }));
+
+//            // Forms TextArea
+            $('#forms').append(gl.twitter.Clearfix());
+            $('#forms').append(gl.twitter.form.TextArea());
+            $('#forms').append(gl.twitter.form.TextArea({
+                text: 'This is text area text',
+                attrs: {
+                    cols: 40,
+                    rows: 5
+                }
+            }));
+//
+//            // Forms CheckBox
+            $('#forms').append(gl.twitter.Clearfix());
+            $('#forms').append(gl.twitter.form.CheckBox())
+            $('#forms').append(gl.twitter.form.CheckBox({
+                value: 'checkbox #1'
+            }))
+            $('#forms').append(gl.twitter.form.CheckBox({
+                value: 'checkbox #2',
+                attrs:{
+                    checked: true
+                }
+            }))
+
+            // Forms LabeledCheckBox
+            $('#forms').append(gl.twitter.Clearfix());
+            $('#forms').append(gl.twitter.form.LabeledCheckBox({
+                label: 'My checkbox #1'
+            }));
+            $('#forms').append(gl.twitter.form.LabeledCheckBox({
+                label: 'My checkbox #2',
+                attrs:{
+                    checked: true
+                }
+            }));
+
+            // Forms Radio
+            $('#forms').append(gl.twitter.Clearfix());
+            $('#forms').append(gl.twitter.form.Radio());
+            $('#forms').append(gl.twitter.form.Radio({
+                attrs: {
+                    checked: true,
+                    name: 'myRadio'
+                }
+            }));
+
+            // Forms LabeledRadio
+            $('#forms').append(gl.twitter.Clearfix());
+            $('#forms').append(gl.twitter.form.LabeledRadio({
+                label: 'My radio #1',
+                attrs: {
+                    name: 'myRadio'
+                }
+            }));
+            $('#forms').append(gl.twitter.form.LabeledRadio({
+                label: 'My radio #2',
+                attrs: {
+                    checked: true,
+                    name: 'myRadio'
+                }
+
+            }));
+
+            // Form Button
+            $('#forms').append(gl.twitter.Clearfix());
+            $('#forms').append(gl.twitter.form.Button({
+                text: 'My button #1'
+            }));
+            $('#forms').append(gl.twitter.form.Button({
+                text: 'My button #1',
+                type: gl.twitter.form.BUTTON_PRIMARY,
+                submit: true
+            }));
+
+            // Form Select
+            $('#forms').append(gl.twitter.Clearfix());
+            $('#forms').append(gl.twitter.form.Select({
+                options: ['One', 'Two', 'Three']
+            }))
+            $('#forms').append(gl.twitter.form.Select({
+                options: {
+                    1: 'One',
+                    2: 'Two',
+                    3: 'Three'
+                }
+            }))
+            $('#forms').append(gl.twitter.form.Select({
+                attrs: {
+                    multiple: true
+                },
+                options: {
+                    1: 'One',
+                    2: ['2.1', '2.2'],
+                    3: {1:'3.1',2:'3.2'}
+                }
+            }))
+
+            $('#forms').append(gl.twitter.form.Text({
+                password: true,
+                attrs: {
+                    placeholder: 'Search for the book'
+                },
+                addOn: {
+                    left:
+                }
+            }))
+        });
+
+
+    </script>
+</head>
+<body>
+<!--<div bee-component="MyComponent">-->
+    <!--<h1 bee-view="age"></h1>-->
+    <!--<input type="text" bee-model="age" />-->
+    <!--<a href="#" bee-click="sayHello">Say hello!</a>-->
+    <!--<a href="#" bee-click="sayWorld">Say world!</a>-->
+    <!--<div bee-resource="resource.html"></div>-->
+<!--</div>-->
+
+<h1>Forms</h1>
+<div id="forms"></div>
+
+</body>
+</html>
