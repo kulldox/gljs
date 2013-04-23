@@ -29,8 +29,12 @@ var gl = {
         return clone;
     },
 
-    undef: function(v) {
-        return (typeof v == 'undefined')
+    undef: function(v, d) {
+        return (typeof v == 'undefined') ? ((typeof d != 'undefined') ? d : true) : v
+    },
+
+    defined: function(v, d) {
+        return (typeof v != 'undefined') ? v : ((typeof d != 'undefined') ? d : false)
     }
 }
 
@@ -113,76 +117,71 @@ gl.twitter.form = {
         })
     },
 
-    Text: function(cfg) {
-        if (!cfg) cfg = {}
+    Text: function(conf) {
+        conf = gl.defined(conf, {})
 
-        var attrs = gl.merge(cfg.attrs, {
-            type: (cfg.password) ? 'password' : 'text',
-            value: !gl.undef(cfg.value) ? cfg.value : ''
-        })
+        var attrs = gl.defined(conf.attrs, {})
 
-        if (cfg.searchQuery) attrs.styleClass += ' search-query'
+        attrs['type'] = (gl.defined(conf.password)) ? 'password' : 'text'
+        attrs['value'] = gl.defined(conf.value, '')
+        attrs['class'] = (gl.defined(conf.search)) ? 'search-query' : ''
 
         var node = gl.dom.factory({
             tag: 'input',
             attrs: attrs
         })
 
-        if (!gl.undef(cfg.addOn)) {
-            var factoryElement = function(cfg) {
-                if (cfg.xType == 'button') {
-                    return gl.twitter.form.Button(cfg)
-                } else if (cfg.xType == 'dropdown') {
-
-                }
-            }
-
+        if (gl.defined(conf.addOn)) {
             var wrapper = gl.dom.factory({
                 tag: 'div'
             })
 
-            if (!gl.undef(cfg.addOn.left)) {
+            if (gl.defined(conf.addOn.left)) {
                 wrapper.className += ' input-prepend'
-
-                if (typeof cfg.addOn.left == 'object') {
-                    for (var i in cfg.addOn.left) {
-                        wrapper.appendChild(factoryElement(cfg.addOn.left[i]))
-                    }
-                } else {
-                    wrapper.appendChild(gl.dom.factory({
-                        tag: 'span',
-                        html: cfg.addOn.left,
-                        attrs: {'class': 'add-on'}
-                    }))
-                }
+                this._Text_addOnNodeFactory(wrapper, conf.addOn.left)
             }
 
-            wrapper.appendChild(node);
+            wrapper.appendChild(node)
 
-            if (!gl.undef(cfg.addOn.right)) {
+            if (gl.defined(conf.addOn.right)) {
                 wrapper.className += ' input-append'
-
-                if (typeof cfg.addOn.left == 'object') {
-                    for (var i in cfg.addOn.left) {
-                        wrapper.appendChild(factoryElement(cfg.addOn.left[i]))
-                    }
-                } else {
-                    wrapper.appendChild(gl.dom.factory({
-                        tag: 'span',
-                        html: cfg.addOn.right,
-                        attrs: {'class': 'add-on'}
-                    }))
-                }
+                this._Text_addOnNodeFactory(wrapper, conf.addOn.right)
             }
 
-            node = wrapper;
+            node = wrapper
         }
 
-        return node;
+        return node
+    },
+
+    _Text_addOnNodeFactory: function(rootNode, cfg) {
+        if (typeof cfg == 'object') {
+            for (var i in cfg) {
+                var node = null
+
+                switch (cfg[i].xType) {
+                    case 'button':
+                        node = gl.twitter.form.Button(cfg[i])
+                        break;
+
+                    case 'dropdown':
+                        node = gl.twitter.menu.DropDown(cfg[i])
+                        break;
+                }
+
+                rootNode.appendChild(node)
+            }
+        } else {
+            rootNode.appendChild(gl.dom.factory({
+                tag: 'span',
+                html: cfg,
+                attrs: {'class': 'add-on'}
+            }))
+        }
     },
 
     TextArea: function(cfg) {
-        if (!cfg) cfg = {}
+        cfg = gl.defined(cfg, {})
 
         return gl.dom.factory({
             tag: 'textarea',
@@ -192,7 +191,7 @@ gl.twitter.form = {
     },
 
     CheckBox: function(cfg) {
-        if (!cfg) cfg = {}
+        cfg = gl.defined(cfg, {})
 
         var attrs = gl.merge(cfg.attrs, {
             type: 'checkbox',
@@ -216,7 +215,7 @@ gl.twitter.form = {
     },
 
     Radio: function(cfg) {
-        if (!cfg) cfg = {}
+        cfg = gl.defined(cfg, {})
 
         var attrs = gl.merge(cfg.attrs, {
             type: 'radio',
@@ -316,5 +315,112 @@ gl.twitter.form = {
             children: options
         })
     }
+}
 
+gl.twitter.menu = {
+    DropDown: function(conf) {
+        var buttons = []
+
+        if (gl.defined(conf.splitted)) {
+            buttons.push({
+                tag: 'button',
+                html: conf.text,
+                attrs: {
+                    'class': 'btn'
+                }
+            })
+            buttons.push({
+                tag: 'button',
+                attrs: {
+                    'class': 'btn dropdown-toggle',
+                    'data-toggle': 'dropdown'
+                },
+                children: [{
+                    tag: 'span',
+                    attrs: {'class': 'caret'}
+                }]
+            })
+        } else {
+            buttons.push({
+                tag: 'button',
+                attrs: {
+                    'class': 'btn dropdown-toggle',
+                    'data-toggle': 'dropdown'
+                },
+                children: [conf.text + ' ', {
+                    tag: 'span',
+                    attrs: {'class': 'caret'}
+                }]
+            })
+        }
+
+        return gl.dom.factory({
+            tag: 'div',
+            attrs: {'class': 'btn-group'},
+            children: buttons.concat(this._DropDown_factoryListConf(conf))
+        })
+    },
+
+    _DropDown_factoryListConf: function(conf) {
+        var listStyle = 'dropdown-menu';
+
+        if (gl.defined(conf.alignRight)) {
+            listStyle += ' pull-right'
+        } else if (gl.defined(conf.alignLeft)) {
+            listStyle += ' pull-left'
+        }
+
+        var list = [];
+
+        for (var i in conf.items) {
+            if (gl.defined(conf.items[i].divider)) {
+                list.push({
+                    tag: 'li',
+                    attrs: {'class': 'divider'}
+                })
+
+                continue
+            }
+
+            if (gl.defined(conf.items[i].items)) {
+                list.push({
+                    tag: 'li',
+                    attrs: {'class': 'dropdown-submenu'},
+                    children: [{
+                        tag: 'a',
+                        html: conf.items[i].text,
+                        attrs: {
+                            'href': '#'
+                        }
+                    }].concat(this._DropDown_factoryListConf(conf.items[i]))
+                })
+
+                continue
+            }
+
+            var className = ''
+
+            if (gl.defined(conf.items[i].disabled)) {
+                className += ' disabled'
+            }
+
+            list.push({
+                tag: 'li',
+                attrs: {'class': className},
+                children: [{
+                    tag: 'a',
+                    html: conf.items[i].text,
+                    attrs: {
+                        'href': gl.defined(conf.items[i].url, '')
+                    }
+                }]
+            })
+        }
+
+        return {
+            tag: 'ul',
+            attrs: {'class': listStyle},
+            children: list
+        }
+    }
 }
