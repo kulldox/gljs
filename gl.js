@@ -73,13 +73,14 @@ gl.dom = {
             }
         }
 
-//        if (typeof cfg.events != 'undefined') {
-//            for (var ev in cfg.events) {
-//                el[ev] = cfg.events[ev];
-//            }
-//        }
-
         return el;
+    },
+
+    defaultAttributes: function(conf) {
+        return {
+            'style': gl.defined(conf.style, ''),
+            'class': gl.defined(conf.styleClass, '')
+        }
     }
 }
 
@@ -101,30 +102,35 @@ gl.twitter.form = {
     BUTTON_WARNING: 'btn-warning',
     BUTTON_ERROR: 'btn-error',
 
-    Label: function(cfg) {
+    Label: function(conf) {
+        var attrs = gl.dom.defaultAttributes(conf)
+
         return gl.dom.factory({
             tag: 'label',
-            html: cfg.text,
-            attrs: cfg.attrs
+            html: conf.text,
+            attrs: attrs
         })
     },
 
-    HelpBlock: function(cfg) {
+    HelpBlock: function(conf) {
+        var attrs = gl.dom.defaultAttributes(conf)
+        attrs['class'] += 'help-block'
+
         return gl.dom.factory({
             tag: 'span',
-            html: cfg.text,
-            attrs: cfg.attrs
+            html: conf.text,
+            attrs: attrs
         })
     },
 
     Text: function(conf) {
         conf = gl.defined(conf, {})
 
-        var attrs = gl.defined(conf.attrs, {})
-
+        var attrs = gl.dom.defaultAttributes(conf)
         attrs['type'] = (gl.defined(conf.password)) ? 'password' : 'text'
         attrs['value'] = gl.defined(conf.value, '')
         attrs['class'] = (gl.defined(conf.search)) ? 'search-query' : ''
+        attrs['placeholder'] = gl.defined(conf.placeholder, '')
 
         var node = gl.dom.factory({
             tag: 'input',
@@ -180,140 +186,144 @@ gl.twitter.form = {
         }
     },
 
-    TextArea: function(cfg) {
-        cfg = gl.defined(cfg, {})
+    TextArea: function(conf) {
+        conf = gl.defined(conf, {})
+
+        var attrs = gl.dom.defaultAttributes(conf)
 
         return gl.dom.factory({
             tag: 'textarea',
-            html: cfg.text,
-            attrs: cfg.attrs
-        });
-    },
-
-    CheckBox: function(cfg) {
-        cfg = gl.defined(cfg, {})
-
-        var attrs = gl.merge(cfg.attrs, {
-            type: 'checkbox',
-            value: !gl.undef(cfg.value) ? cfg.value : ''
-        })
-
-        var node = gl.dom.factory({
-            tag: 'input',
+            html: conf.text,
             attrs: attrs
         });
-
-        if (!gl.undef(cfg.label)) {
-            node = gl.dom.factory({
-                tag: 'label',
-                attrs: {'class': 'checkbox'},
-                children: [node, cfg.label]
-            })
-        }
-
-        return node;
     },
 
-    Radio: function(cfg) {
-        cfg = gl.defined(cfg, {})
+    CheckBox: function(conf) {
+        conf = gl.defined(conf, {})
 
-        var attrs = gl.merge(cfg.attrs, {
-            type: 'radio',
-            value: !gl.undef(cfg.value) ? cfg.value : ''
-        })
+        var attrs = gl.dom.defaultAttributes(conf)
+        attrs['type'] = 'checkbox'
+        attrs['value'] = gl.defined(conf.value, '')
 
-        var node = gl.dom.factory({
+        if (gl.defined(conf.checked)) {
+            attrs['checked'] = true
+        }
+
+        var node = {
             tag: 'input',
             attrs: attrs
-        });
-
-        if (!gl.undef(cfg.label)) {
-            node = gl.dom.factory({
-                tag: 'label',
-                attrs: {'class': 'radio'},
-                children: [node, cfg.label]
-            })
         }
 
-        return node;
+        if (gl.defined(conf.label)) {
+            node = {
+                tag: 'label',
+                attrs: {
+                    'class': 'checkbox'
+                },
+                children: [node, conf.label]
+            }
+        }
+
+        return gl.dom.factory(node);
     },
 
-    Button: function(cfg) {
-        var attrs = {
-            styleClass: 'btn ' + ((cfg.type) ? cfg.type : '')
+    Radio: function(conf) {
+        conf = gl.defined(conf, {})
+
+        var node = {
+            tag: 'input',
+            attrs: {
+                'type': 'radio',
+                'value': gl.defined(conf.value, '')
+            }
         }
 
-        if (cfg.submit) attrs.type = 'submit'
+        if (gl.defined(conf.label)) {
+            node = {
+                tag: 'label',
+                attrs: {
+                    'class': 'radio'
+                },
+                children: [node, conf.label]
+            }
+        }
+
+        return gl.dom.factory(node);
+    },
+
+    Button: function(conf) {
+        conf = gl.defined(conf, {})
 
         return gl.dom.factory({
             tag: 'button',
-            html: cfg.text,
-            attrs: attrs
+            html: conf.text,
+            attrs: {
+                'class': 'btn ' + gl.defined(conf.type, '')
+            }
         })
     },
 
-    Select: function(cfg) {
-        var simpleListFactory = function(values) {
-            var options = []
-
-            for (var i in values) {
-                options.push(gl.dom.factory({
-                    tag: 'option',
-                    html: values[i],
-                    attrs: {
-                        value: values[i]
-                    }
-                }))
-            }
-
-            return options;
-        }
-
-        var keyValueListFactory = function(values) {
-            var options = [];
-
-            for (var i in values) {
-                if (values[i] instanceof Array) {
-                    options.push(gl.dom.factory({
-                        tag: 'optgroup',
-                        attrs: {
-                            label: i
-                        },
-                        children: simpleListFactory(values[i])
-                    }))
-                } else if (typeof values[i] == 'object') {
-                    options.push(gl.dom.factory({
-                        tag: 'optgroup',
-                        attrs: {
-                            label: i
-                        },
-                        children: keyValueListFactory(values[i])
-                    }))
-                } else {
-                    options.push(gl.dom.factory({
-                        tag: 'option',
-                        html: values[i],
-                        attrs: {
-                            value: i
-                        }
-                    }))
-                }
-            }
-
-            return options;
-        }
-
-        if (cfg.options instanceof Array) {
-            var options = simpleListFactory(cfg.options);
-        } else if (typeof cfg.options == 'object') {
-            var options = keyValueListFactory(cfg.options);
+    Select: function(conf) {
+        if (conf.items instanceof Array) {
+            var options = this._Select_simpleListFactory(conf.items);
+        } else if (typeof conf.items == 'object') {
+            var options = this._Select_keyValueListFactory(conf.items);
         }
 
         return gl.dom.factory({
             tag: 'select',
-            attrs: cfg.attrs,
             children: options
         })
+    },
+
+    _Select_simpleListFactory: function(values) {
+        var options = []
+
+        for (var i in values) {
+            options.push({
+                tag: 'option',
+                html: values[i],
+                attrs: {
+                    value: values[i]
+                }
+            })
+        }
+
+        return options;
+    },
+
+    _Select_keyValueListFactory: function(values) {
+        var options = [];
+
+        for (var i in values) {
+            if (values[i] instanceof Array) {
+                options.push({
+                    tag: 'optgroup',
+                    attrs: {
+                        label: i
+                    },
+                    children: this._Select_simpleListFactory(values[i])
+                })
+            } else if (typeof values[i] == 'object') {
+                options.push({
+                    tag: 'optgroup',
+                    attrs: {
+                        label: i
+                    },
+                    children: this._Select_keyValueListFactory(values[i])
+                })
+            } else {
+                options.push({
+                    tag: 'option',
+                    html: values[i],
+                    attrs: {
+                        value: i
+                    }
+                })
+            }
+        }
+
+        return options;
     }
 }
 
@@ -364,10 +374,8 @@ gl.twitter.menu = {
     _DropDown_factoryListConf: function(conf) {
         var listStyle = 'dropdown-menu';
 
-        if (gl.defined(conf.alignRight)) {
-            listStyle += ' pull-right'
-        } else if (gl.defined(conf.alignLeft)) {
-            listStyle += ' pull-left'
+        if (gl.defined(conf.align)) {
+            listStyle += ' pull-' + conf.align
         }
 
         var list = [];
