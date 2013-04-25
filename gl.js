@@ -77,10 +77,25 @@ gl.dom = {
     },
 
     defaultAttributes: function(conf) {
-        return {
-            'style': gl.defined(conf.style, ''),
-            'class': gl.defined(conf.styleClass, '')
+        var attrs = {}
+
+        if (gl.defined(conf.id)) {
+            attrs['id'] = conf.id
         }
+
+        if (gl.defined(conf.name)) {
+            attrs['name'] = conf.name
+        }
+
+        if (gl.defined(conf.style)) {
+            attrs['style'] = conf.style
+        }
+
+        if (gl.defined(conf.styleClass)) {
+            attrs['class'] = conf.styleClass
+        }
+
+        return attrs;
     }
 }
 
@@ -230,12 +245,17 @@ gl.twitter.form = {
     Radio: function(conf) {
         conf = gl.defined(conf, {})
 
+        var attrs = gl.dom.defaultAttributes(conf)
+        attrs['type'] = 'radio'
+        attrs['value'] = gl.defined(conf.value, '')
+
+        if (gl.defined(conf.checked)) {
+            attrs['checked'] = true
+        }
+
         var node = {
             tag: 'input',
-            attrs: {
-                'type': 'radio',
-                'value': gl.defined(conf.value, '')
-            }
+            attrs: attrs
         }
 
         if (gl.defined(conf.label)) {
@@ -254,16 +274,23 @@ gl.twitter.form = {
     Button: function(conf) {
         conf = gl.defined(conf, {})
 
+        var attrs = gl.dom.defaultAttributes(conf)
+        attrs['class'] += ' btn ' + gl.defined(conf.type, '')
+
         return gl.dom.factory({
             tag: 'button',
             html: conf.text,
-            attrs: {
-                'class': 'btn ' + gl.defined(conf.type, '')
-            }
+            attrs: attrs
         })
     },
 
     Select: function(conf) {
+        var attrs = gl.dom.defaultAttributes(conf)
+
+        if (gl.defined(conf.multiple)) {
+            attrs['multiple'] = true
+        }
+
         if (conf.items instanceof Array) {
             var options = this._Select_simpleListFactory(conf.items);
         } else if (typeof conf.items == 'object') {
@@ -272,7 +299,8 @@ gl.twitter.form = {
 
         return gl.dom.factory({
             tag: 'select',
-            children: options
+            children: options,
+            attrs: attrs
         })
     },
 
