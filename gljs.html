@@ -6,7 +6,7 @@
         body {
             padding: 10px 25px;
         }
-        h2, h4 {
+        h2{
             border-bottom: 1px solid #333;
         }
         code {
@@ -63,7 +63,7 @@
         }));
     </code>
 </div>
-<h2>Help blocks</h2>
+<h2>Help block</h2>
 <div>
     <code>
         $(this).before(gl.twitter.form.HelpBlock({
@@ -79,7 +79,16 @@
         }));
     </code>
 </div>
-<h2>Text input</h2>
+<h2>Help inline</h2>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.HelpInline({
+            text: 'Help inline message'
+        }));
+    </code>
+</div>
+<h2>Inputs</h2>
+<h3>Basic</h3>
 <div>
     <code>
         $(this).before(gl.twitter.form.Text());
@@ -101,7 +110,90 @@
         }));
     </code>
 </div>
-<h4>Search input</h4>
+<h3>Width by size</h3>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.Text({
+            size: gl.twitter.form.INPUT_MINI,
+            placeholder: 'INPUT_MINI'
+        }));
+
+        $(this).before(gl.twitter.Clearfix())
+
+        $(this).before(gl.twitter.form.Text({
+            size: gl.twitter.form.INPUT_SMALL,
+            placeholder: 'INPUT_SMALL'
+        }));
+
+        $(this).before(gl.twitter.Clearfix())
+
+        $(this).before(gl.twitter.form.Text({
+            size: gl.twitter.form.INPUT_MEDIUM,
+            placeholder: 'INPUT_MEDIUM'
+        }));
+
+        $(this).before(gl.twitter.Clearfix())
+
+        $(this).before(gl.twitter.form.Text({
+            size: gl.twitter.form.INPUT_LARGE,
+            placeholder: 'INPUT_LARGE'
+        }));
+
+        $(this).before(gl.twitter.Clearfix())
+
+        $(this).before(gl.twitter.form.Text({
+            size: gl.twitter.form.INPUT_XLARGE,
+            placeholder: 'INPUT_XLARGE'
+        }));
+
+        $(this).before(gl.twitter.Clearfix())
+
+        $(this).before(gl.twitter.form.Text({
+            size: gl.twitter.form.INPUT_XXLARGE,
+            placeholder: 'INPUT_XXLARGE'
+        }));
+
+        $(this).before(gl.twitter.Clearfix())
+
+        $(this).before(gl.twitter.form.Text({
+            size: gl.twitter.form.INPUT_BLOCK_LEVEL,
+            placeholder: 'INPUT_BLOCK_LEVEL'
+        }));
+    </code>
+</div>
+<h3>Width by span</h3>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.Text({
+            span: 1,
+            placeholder: 'span1'
+        }));
+
+        $(this).before(gl.twitter.Clearfix())
+
+        $(this).before(gl.twitter.form.Text({
+            span: 2,
+            placeholder: 'span2'
+        }));
+
+        $(this).before(gl.twitter.Clearfix())
+
+        $(this).before(gl.twitter.form.Text({
+            span: 3,
+            placeholder: 'span3'
+        }));
+    </code>
+</div>
+<h3>Not editable</h3>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.Text({
+            uneditable: true,
+            value: 'Try to edit me'
+        }));
+    </code>
+</div>
+<h3>Search input</h3>
 <div>
     <code>
         $(this).before(gl.twitter.form.Text({
@@ -110,7 +202,7 @@
         }));
     </code>
 </div>
-<h4>Password input</h4>
+<h3>Password input</h3>
 <div>
     <code>
         $(this).before(gl.twitter.form.Text({
@@ -119,7 +211,26 @@
         }))
     </code>
 </div>
-<h4>Inputs with addOns</h4>
+<h3>Email &amp; Required</h3>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.Text({
+            email: true,
+            required: true,
+            placeholder: 'Email input'
+        }))
+    </code>
+</div>
+<h3>Disabled</h3>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.Text({
+        disabled: true,
+        placeholder: 'Disabled input'
+        }))
+    </code>
+</div>
+<h3>AddOns</h3>
 <div>
     <code>
         $(this).before(gl.twitter.form.Text({
@@ -180,7 +291,7 @@
         }))
     </code>
 </div>
-<h4>Text area</h4>
+<h3>Text area</h3>
 <div>
     <code>
         $(this).before(gl.twitter.form.TextArea());
@@ -195,7 +306,7 @@
     </code>
 </div>
 
-<h4>Checkboxes</h4>
+<h3>Checkboxes</h3>
 <div>
     <code>
         $(this).before(gl.twitter.form.CheckBox())
@@ -232,7 +343,7 @@
         }))
     </code>
 </div>
-<h4>Radio boxes</h4>
+<h3>Radio boxes</h3>
 <div>
     <code>
         $(this).before(gl.twitter.form.Radio());
@@ -254,23 +365,105 @@
         }));
     </code>
 </div>
-<h4>Buttons</h4>
+<h3>Buttons</h3>
+<h4>Types</h4>
 <div>
     <code>
         $(this).before(gl.twitter.form.Button({
-            text: 'My button #1'
+            text: 'Default button'
         }));
-    </code>
-</div>
-<div>
-    <code>
+
         $(this).before(gl.twitter.form.Button({
-            text: 'My button #1',
+            text: 'Primary button',
             type: gl.twitter.form.BUTTON_PRIMARY,
         }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Info button',
+            type: gl.twitter.form.BUTTON_INFO,
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Success button',
+            type: gl.twitter.form.BUTTON_SUCCESS,
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Warning button',
+            type: gl.twitter.form.BUTTON_WARNING,
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Danger button',
+            type: gl.twitter.form.BUTTON_DANGER,
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Inverse button',
+            type: gl.twitter.form.BUTTON_INVERSE,
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Link button',
+            type: gl.twitter.form.BUTTON_LINK,
+        }));
     </code>
 </div>
-<h4>Select</h4>
+<h4>Size</h4>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.Button({
+            text: 'Submit button',
+            size: gl.twitter.form.BUTTON_LARGE
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Submit button',
+            size: gl.twitter.form.BUTTON_DEFAULT
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Submit button',
+            size: gl.twitter.form.BUTTON_SMALL
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Submit button',
+            size: gl.twitter.form.BUTTON_MINI
+        }));
+
+        $(this).before(gl.twitter.form.Button({
+            text: 'Submit button',
+            size: gl.twitter.form.BUTTON_BLOCK
+        }));
+
+    </code>
+</div>
+<h4>Submit & Reset</h4>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.Button({
+            text: 'Submit button',
+            type: gl.twitter.form.BUTTON_PRIMARY,
+            submit: true
+        }));
+        $(this).before(gl.twitter.form.Button({
+            text: 'Reset button',
+            reset: true
+        }));
+    </code>
+</div>
+<h4>Disabled</h4>
+<div>
+    <code>
+        $(this).before(gl.twitter.form.Button({
+            text: 'Submit button',
+            disabled: true
+        }));
+    </code>
+</div>
+
+<h3>Select</h3>
 <div>
     <code>
         $(this).before(gl.twitter.form.Select({
@@ -307,7 +500,7 @@
     </code>
 </div>
 <h2>Menus</h2>
-<h4>Drop down</h4>
+<h3>Drop down</h3>
 <div>
     <code>
         $(this).before(gl.twitter.menu.DropDown({

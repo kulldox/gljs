@@ -77,25 +77,12 @@ gl.dom = {
     },
 
     defaultAttributes: function(conf) {
-        var attrs = {}
-
-        if (gl.defined(conf.id)) {
-            attrs['id'] = conf.id
+        return {
+            'id': gl.defined(conf.id, ''),
+            'name': gl.defined(conf.name, ''),
+            'class': gl.defined(conf.styleClass, ''),
+            'style': gl.defined(conf.style, '')
         }
-
-        if (gl.defined(conf.name)) {
-            attrs['name'] = conf.name
-        }
-
-        if (gl.defined(conf.style)) {
-            attrs['style'] = conf.style
-        }
-
-        if (gl.defined(conf.styleClass)) {
-            attrs['class'] = conf.styleClass
-        }
-
-        return attrs;
     }
 }
 
@@ -115,7 +102,23 @@ gl.twitter.form = {
     BUTTON_INFO: 'btn-info',
     BUTTON_SUCCESS: 'btn-success',
     BUTTON_WARNING: 'btn-warning',
-    BUTTON_ERROR: 'btn-error',
+    BUTTON_DANGER: 'btn-danger',
+    BUTTON_INVERSE: 'btn-inverse',
+    BUTTON_LINK: 'btn-link',
+
+    BUTTON_LARGE: 'btn-large',
+    BUTTON_DEFAULT: 'btn-default',
+    BUTTON_SMALL: 'btn-small',
+    BUTTON_MINI: 'btn-mini',
+    BUTTON_BLOCK: 'btn-block',
+
+    INPUT_MINI: 'input-mini',
+    INPUT_SMALL: 'input-small',
+    INPUT_MEDIUM: 'input-medium',
+    INPUT_LARGE: 'input-large',
+    INPUT_XLARGE: 'input-xlarge',
+    INPUT_XXLARGE: 'input-xxlarge',
+    INPUT_BLOCK_LEVEL: 'input-block-level',
 
     Label: function(conf) {
         var attrs = gl.dom.defaultAttributes(conf)
@@ -138,19 +141,62 @@ gl.twitter.form = {
         })
     },
 
+    HelpInline: function(conf) {
+        var attrs = gl.dom.defaultAttributes(conf)
+        attrs['class'] += 'help-inline'
+
+        return gl.dom.factory({
+            tag: 'span',
+            html: conf.text,
+            attrs: attrs
+        })
+    },
+
     Text: function(conf) {
         conf = gl.defined(conf, {})
 
-        var attrs = gl.dom.defaultAttributes(conf)
-        attrs['type'] = (gl.defined(conf.password)) ? 'password' : 'text'
-        attrs['value'] = gl.defined(conf.value, '')
-        attrs['class'] = (gl.defined(conf.search)) ? 'search-query' : ''
-        attrs['placeholder'] = gl.defined(conf.placeholder, '')
+        var nodeConf = {
+            tag: 'input'
+        }
 
-        var node = gl.dom.factory({
-            tag: 'input',
-            attrs: attrs
-        })
+        nodeConf.attrs = gl.dom.defaultAttributes(conf)
+        nodeConf.attrs['type'] = 'text'
+        nodeConf.attrs['value'] = gl.defined(conf.value, '')
+        nodeConf.attrs['class'] = (gl.defined(conf.search)) ? 'search-query' : ''
+        nodeConf.attrs['placeholder'] = gl.defined(conf.placeholder, '')
+
+        if (gl.defined(conf.password)) {
+            nodeConf.attrs['type'] = 'password'
+        }
+
+        if (gl.defined(conf.email)) {
+            nodeConf.attrs['type'] = 'email'
+        }
+
+        if (gl.defined(conf.required)) {
+            nodeConf.attrs['required'] = true
+        }
+
+        if (gl.defined(conf.disabled)) {
+            nodeConf.attrs['disabled'] = true
+        }
+
+        if (gl.defined(conf.size)) {
+            nodeConf.attrs['class'] += ' ' + conf.size
+        }
+
+        if (gl.defined(conf.span)) {
+            nodeConf.attrs['class'] += ' span' + conf.span
+        }
+
+        if (gl.defined(conf.uneditable)) {
+            nodeConf.tag = 'span'
+            nodeConf.html = nodeConf.attrs['value']
+            nodeConf.attrs['value'] = ''
+            nodeConf.attrs['class'] += ' uneditable-input'
+        }
+
+        var node = gl.dom.factory(nodeConf)
 
         if (gl.defined(conf.addOn)) {
             var wrapper = gl.dom.factory({
@@ -274,14 +320,29 @@ gl.twitter.form = {
     Button: function(conf) {
         conf = gl.defined(conf, {})
 
-        var attrs = gl.dom.defaultAttributes(conf)
-        attrs['class'] += ' btn ' + gl.defined(conf.type, '')
-
-        return gl.dom.factory({
+        var nodeConf = {
             tag: 'button',
-            html: conf.text,
-            attrs: attrs
-        })
+            html: conf.text
+        }
+
+        nodeConf.attrs = gl.dom.defaultAttributes(conf)
+        nodeConf.attrs['class'] += (' btn '
+            + (gl.defined(conf.type, '') + ' ')
+            + (gl.defined(conf.size, '') + ' ')).trim()
+
+        if (gl.defined(conf.submit)) {
+            nodeConf.attrs['type'] = 'submit'
+        }
+
+        if (gl.defined(conf.reset)) {
+            nodeConf.attrs['type'] = 'reset'
+        }
+
+        if (gl.defined(conf.disabled)) {
+            nodeConf.attrs['disabled'] = true
+        }
+
+        return gl.dom.factory(nodeConf)
     },
 
     Select: function(conf) {
@@ -458,5 +519,15 @@ gl.twitter.menu = {
             attrs: {'class': listStyle},
             children: list
         }
+    }
+}
+
+gl.twitter.media = {
+    Image: function(conf) {
+        // Not implemented yet
+    },
+
+    Icon: function(conf) {
+        // Not implemented yet
     }
 }
