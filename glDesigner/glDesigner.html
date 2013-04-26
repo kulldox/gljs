@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="glDesigner.css" rel="stylesheet" />
+
+    <script src="../resources/jquery-1.9.1.min.js"></script>
+    <script src="../resources/jquery.cookie.js"></script>
+    <script src="../resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../gl.js"></script>
+    <script src="gl.designer.js"></script>
+
+    <title>glDesigner</title>
+</head>
+<body>
+<table class="gld-dashboard">
+    <tr>
+        <td class="gl-navbar" colspan="2">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a class="brand" href="#">glDesigner</a>
+                    <ul class="nav">
+                        <li class="divider-vertical"></li>
+                        <li><a href="#"><span class="icon-file"></span>&nbsp;New</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="#"><span class="icon-eye-open"></span>&nbsp;Preview</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="#"><span class="icon-save"></span>&nbsp;Save</a></li>
+                        <li class="divider-vertical"></li>
+                        <li class="pull-right"><a href="#"><span class="icon-github"></span>&nbsp;On GitHub</a></li>
+                        <li class="divider-vertical"></li>
+                        <li class="pull-right"><a href="#"><span class="icon-file-alt"></span>&nbsp;License</a></li>
+                        <li class="divider-vertical"></li>
+                        <li class="pull-right"><a href="#"><span class="icon-group"></span>&nbsp;About</a></li>
+                        <li class="divider-vertical"></li>
+                    </ul>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="gld-viewport"></td>
+        <td class="gld-sidebar">
+            <table>
+                <tr>
+                    <td class="sidebar-header">
+                        <ul class="nav nav-tabs">
+                            <li><a href="#builder" data-toggle="tab"><span class="icon-th"></span>&nbsp;Builder</a></li>
+                            <li><a href="#builder" data-toggle="tab"><span class="icon-list-alt"></span>&nbsp;Tree</a></li>
+                            <li class="active"><a href="#editor" data-toggle="tab"><span class="icon-edit"></span>&nbsp;Editor</a></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sidebar-content">
+                        <div class="tab-content">
+                            <div class="tab-pane" id="builder">Not done</div>
+                            <div class="tab-pane active" id="editor">
+                                <table class="gld-editor">
+                                    <tr>
+                                        <td>
+                                            <textarea class="input-block-level">[]</textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="gld-editor-commands">
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary" gld-action="execute"><span class="icon-cog"></span>&nbsp;Execute</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td class="gld-footer">
+            <strong>glDesigner</strong> - Twitter Bootstrap mock-up tool
+        </td>
+        <td class="gld-copyright">
+            Copyright &copy; 2013 by Andrei Ermicioi
+        </td>
+    </tr>
+</table>
+</body>
+</html>
