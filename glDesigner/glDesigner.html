@@ -16,7 +16,7 @@
 <body>
 <table class="gld-dashboard">
     <tr>
-        <td class="gl-navbar" colspan="2">
+        <td class="gld-navbar" colspan="2">
             <div class="navbar">
                 <div class="navbar-inner">
                     <a class="brand" href="#">glDesigner</a>
@@ -26,13 +26,13 @@
                         <li class="divider-vertical"></li>
                         <li><a href="#"><span class="icon-eye-open"></span>&nbsp;Preview</a></li>
                         <li class="divider-vertical"></li>
-                        <li><a href="#"><span class="icon-save"></span>&nbsp;Save</a></li>
+                        <li><a href="#"><span class="icon-download"></span>&nbsp;Export</a></li>
                         <li class="divider-vertical"></li>
-                        <li class="pull-right"><a href="#"><span class="icon-github"></span>&nbsp;On GitHub</a></li>
+                        <li><a href="#"><span class="icon-upload"></span>&nbsp;Import</a></li>
                         <li class="divider-vertical"></li>
-                        <li class="pull-right"><a href="#"><span class="icon-file-alt"></span>&nbsp;License</a></li>
+                        <li><a href="https://github.com/erani/gljs" target="_blank"><span class="icon-github"></span>&nbsp;On GitHub</a></li>
                         <li class="divider-vertical"></li>
-                        <li class="pull-right"><a href="#"><span class="icon-group"></span>&nbsp;About</a></li>
+                        <li><a href="#" gld-action="about"><span class="icon-group"></span>&nbsp;About</a></li>
                         <li class="divider-vertical"></li>
                     </ul>
                 </div>
@@ -40,14 +40,15 @@
         </td>
     </tr>
     <tr>
-        <td class="gld-viewport"></td>
+        <td class="gld-viewport">
+            <div class="viewport active-container"></div>
+        </td>
         <td class="gld-sidebar">
             <table>
                 <tr>
                     <td class="sidebar-header">
                         <ul class="nav nav-tabs">
                             <li><a href="#builder" data-toggle="tab"><span class="icon-th"></span>&nbsp;Builder</a></li>
-                            <li><a href="#builder" data-toggle="tab"><span class="icon-list-alt"></span>&nbsp;Tree</a></li>
                             <li class="active"><a href="#editor" data-toggle="tab"><span class="icon-edit"></span>&nbsp;Editor</a></li>
                         </ul>
                     </td>
@@ -55,7 +56,49 @@
                 <tr>
                     <td class="sidebar-content">
                         <div class="tab-content">
-                            <div class="tab-pane" id="builder">Not done</div>
+                            <div class="tab-pane" id="builder">
+                                <div class="gld-builder-controls">
+                                    <div class="btn-group">
+                                        <button class="btn btn-mini" gld-action=""><span class="icon-chevron-left"></span>&nbsp;Previous</button>
+                                        <button class="btn btn-mini" gld-action="">Next&nbsp;<span class="icon-chevron-right"></span></button>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="accordion" id="builder-container">
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#builder-container" href="#collapseLayouts">Layouts</a>
+                                        </div>
+                                        <div id="collapseLayouts" class="accordion-body collapse in">
+                                            <div class="accordion-inner">Some data</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#builder-container" href="#collapseForms">Forms</a>
+                                        </div>
+                                        <div id="collapseForms" class="accordion-body collapse">
+                                            <div class="accordion-inner">Some data</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#builder-container" href="#collapseMenus">Menus</a>
+                                        </div>
+                                        <div id="collapseMenus" class="accordion-body collapse">
+                                            <div class="accordion-inner">Some data</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#builder-container" href="#collapseMedia">Media</a>
+                                        </div>
+                                        <div id="collapseMedia" class="accordion-body collapse">
+                                            <div class="accordion-inner">Some data</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="tab-pane active" id="editor">
                                 <table class="gld-editor">
                                     <tr>
@@ -63,15 +106,19 @@
                                             <textarea class="input-block-level">[]</textarea>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="gld-editor-commands">
-                                            <div class="btn-group">
-                                                <button class="btn btn-primary" gld-action="execute"><span class="icon-cog"></span>&nbsp;Execute</button>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </table>
                             </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sidebar-commands">
+                        <div class="btn-group">
+                            <button class="btn btn-mini btn-primary" gld-action="run"><span class="icon-play"></span>&nbsp;Run</button>
+                            <button class="btn btn-mini" gld-action="showMarks"><span class="icon-eye-open"></span>&nbsp;Marks</button>
+                            <button class="btn btn-mini" gld-action="showGrid"><span class="icon-eye-open"></span>&nbsp;Grid</button>
+                            <button class="btn btn-mini" gld-action="popUpEditor"><span class="icon-fullscreen"></span>&nbsp;Editor</button>
+                            <button class="btn btn-mini" gld-action="clear"><span class="icon-trash"></span>&nbsp;Clear</button>
                         </div>
                     </td>
                 </tr>
@@ -87,5 +134,43 @@
         </td>
     </tr>
 </table>
+
+<div id="about-dialog" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <span class="lead">About glDesigner</span>
+    </div>
+    <div class="modal-body">
+        <h4>Welcome to glDesigner v0.1</h4>
+        <p>The developer team of glDesigner welcome you to this tool. We hope that you will find it very useful and will
+            very unpattient to share it with your friends.</p>
+        <p>The glDesigner is build to make your life easier when mocking with Twitter Bootstrap.</p>
+        <p>
+            <h5>Legal notice</h5>
+            You are free to use this tool without any limitation, because it is shared by GPLv3 license. To know more
+            about the license please consult the following link
+            <a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a>
+        </p>
+        <p>
+            <h5>Authors & contributors</h5>
+            <ul>
+                <li>Andrei Ermicioi aka erani
+                    <a href="mailto:andrei.ermicioi@gmail.com" class="btn btn-mini"><span class="icon-envelope">&nbsp;andrei.ermicioi@gmail.com</span></a>
+                    <a href="http://www.facebook.com/ermicioi.andrei"
+                        target="_blank" class="btn btn-mini"><span class="icon-facebook"></span>&nbsp;facebook</a>
+                    <a href="https://plus.google.com/116630321246044043125/posts"
+                        target="_blank" class="btn btn-mini"><span class="icon-google-plus"></span>&nbsp;google</a>
+                    <a href="http://www.linkedin.com/profile/view?id=25903323&goback=%2Enmp_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1&trk=spm_pic"
+                        target="_blank" class="btn btn-mini"><span class="icon-linkedin"></span>&nbsp;linkedin</a>
+                    <a href="https://github.com/erani" target="_blank"  class="btn btn-mini"><span class="icon-github"></span>&nbsp;github</a>
+                </li>
+            </ul>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true"><strong>Close</strong></button>
+    </div>
+</div>
+
 </body>
 </html>

@@ -1,0 +1,124 @@
+[{
+  tag: 'div',
+  attrs: {
+    styleClass: 'row-fluid'
+  },
+  children: [{
+    tag: 'div',
+    attrs: {
+      styleClass: 'span4'
+    },
+    children: [{
+      tag: 'div',
+      attrs: {styleClass: 'well well-small'},
+      children: [{
+	  tag: 'img',
+	  attrs: {
+	    styleClass: 'img-polaroid pull-left',
+	    src: 'http://www.sftv.com.au/content/Blog/Pictures/TriciaHelfer.jpg',
+	    style: 'max-height:64px; max-width:64px;'
+	  }
+	},{
+	  tag: 'div',
+	  attrs: {
+	    styleClass: 'pull-left',
+	    style: 'padding-left: 5px'
+	  },
+	  children: [{
+	    tag: 'div',
+	    html: 'Prague High School',
+	    attrs: {
+	      styleClass: 'lead',
+	      style: 'margin-bottom: 2px'
+	    }
+	  },{
+	    tag: 'div',
+	    html: 'Prague, Czech Republic'
+	  }]
+	},{
+	  tag: 'div',
+	  attrs: {styleClass:'clearfix'}
+	}]
+    },{
+      tag: 'div',
+      attrs: {
+	styleClass: 'alert alert-warning'
+      },
+      children: [{
+	  tag: 'span',
+	  attrs: {styleClass: 'icon-envelope'}
+	}, ' You have 5 unread messages']
+    },{
+      tag: 'ul',
+      attrs: {
+	styleClass: 'nav nav-tabs nav-stacked'
+      },
+      children: [{
+	tag: 'li',
+	children: [{
+	  tag: 'a',
+	  attrs: {
+	    href: '#'
+	  },
+	  children: [{
+	    tag: 'span',
+	    attrs: {styleClass:'icon-group'}
+	  }, ' Teachers']
+	}]
+      },{
+	tag: 'li',
+	children: [{
+	  tag: 'a',
+	  attrs: {
+	    href: '#'
+	  },
+	  children: [{
+	    tag: 'span',
+	    attrs: {styleClass:'icon-group'}
+	  }, ' Students']
+	}]
+      },{
+	tag: 'li',
+	children: [{
+	  tag: 'a',
+	  attrs: {
+	    href: '#'
+	  },
+	  children: [{
+	    tag: 'span',
+	    attrs: {styleClass:'icon-envelope'}
+	  }, ' Messages']
+	}]
+      },{
+	tag: 'li',
+	children: [{
+	  tag: 'a',
+	  attrs: {
+	    href: '#'
+	  },
+	  children: [{
+	    tag: 'span',
+	    attrs: {styleClass:'icon-file-alt'}
+	  }, ' My license']
+	}]
+      }]
+    }]
+  },{
+    tag: 'div',
+    attrs: {
+      styleClass: 'span8'
+    },
+    children: [{
+      tag: 'div',
+      attrs: {styleClass: 'lead'},
+      children: [{
+	tag: 'span',
+	attrs: {styleClass: 'icon-group'}
+      }, ' Teachers ',{
+	tag: 'span',
+	html: '26',
+	attrs: {styleClass: 'badge badge-info'}
+      }]
+    }]
+  }]
+}]

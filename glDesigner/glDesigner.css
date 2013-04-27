@@ -1,15 +1,15 @@
 html, body {
     width: 100%;
     height: 100%;
-    font-size: 0.9em;
+    /*font-size: 0.9em;?*/
 }
 
-.gl-navbar {
+.gld-navbar {
     margin: 0;
     padding: 0;
 }
 
-.gl-navbar .navbar {
+.gld-navbar .navbar {
     margin-bottom: 0;
 }
 
@@ -27,6 +27,11 @@ html, body {
 .gld-viewport {
     height: 100%;
     padding: 10px;
+}
+
+.gld-viewport .viewport {
+    position: relative;
+    height: 100%;
 }
 
 .gld-sidebar {
@@ -67,9 +72,13 @@ html, body {
     font-size: 0.9em;
 }
 
-.gld-sidebar .gld-editor .gld-editor-commands {
+.gld-sidebar .sidebar-commands {
     height: 35px;
 }
+
+.gld-sidebar .gld-builder-controls {
+    text-align: center;
+    }
 
 .gld-footer,
 .gld-copyright {
@@ -88,3 +97,23 @@ html, body {
     text-align: right;
 }
 
+/* === Marks === */
+.gld-viewport .viewport .marks .row,
+.gld-viewport .viewport.marks .row-fluid {
+    border: 1px solid #a47e3c;
+}
+
+.gld-viewport .viewport.marks .row [class*="span"],
+.gld-viewport .viewport.marks .row-fluid [class*="span"] {
+    border: 1px solid #dd1144;
+    margin: 1px;
+}
+
+.gld-viewport .viewport.grid {
+    border: 1px solid #ccc;
+    background: url('grid.png') 0 0;
+}
+
+.gld-viewport .viewport.active-container {
+    border: 1px solid red;
+}
